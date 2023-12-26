@@ -1,0 +1,30 @@
+<?php
+/**
+ * Implements hook_permission().
+ * 
+ */
+function devel_example_permission(){
+    return array(
+        'administer devel_example module' => array(
+            'title' => t('Administer devel_example module'),
+            'description' => t('description devel_example module')
+        ),
+    );
+}
+
+/*
+* Implements hook_node_view().
+*/
+function devel_example_node_view($node, $view_mode, $langcode){
+    $node->content['demo_field']=array(
+        '#type'=>'markup',
+        '#markup'=>'<p>'.t('this is only a demo').'</p>',
+        '#weight'=>-10,
+    );
+    $node->content['demo_list']=array(
+        '#items'=>array('green','blue','red'),
+        '#theme'=>'item_list',
+        '#weight'=>-9,
+    );
+    // krumo($node);
+}

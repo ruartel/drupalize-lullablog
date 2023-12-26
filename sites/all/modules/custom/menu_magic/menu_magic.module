@@ -1,0 +1,90 @@
+<?php
+/*
+* Implements hook_menu.
+*/
+
+function menu_magic_menu(){
+    $items = array();
+
+    $items['magic']=array(
+        'title' => 'A little magic',
+        'page callback' => 'menu_magic_basic',
+        'access arguments' => array('access content')
+    );
+
+    $items['magic/%']=array(
+        'title' => 'Even more magic',
+        'page callback' => 'menu_magic_extra',
+        'page arguments' => array(1),
+        'access arguments' => array('access content'),
+        'file' => 'menu_magic.extra.inc'
+    );
+
+    $items['user/%user/magic']=array(
+        'title' => 'Magic',
+        'description' => 'Magic for users',
+        'page callback' => 'menu_magic_user_tab',
+        'page arguments' => array(1),
+        'access callback' => 'user_access',
+        'access arguments' => array('administer users'),
+        'file' => 'menu_magic.user.inc',
+        'type' => MENU_LOCAL_TASK,
+    );
+
+    $items['node/%node/magic']=array(
+        'title' => 'Magic',
+        'description' => 'Magic for nodes',
+        'page callback' => 'menu_magic_node_context',
+        'page arguments' => array(1),
+        'access arguments' => array('access content'),
+        'file' => 'menu_magic.context.inc',
+        'type' => MENU_LOCAL_TASK,
+        'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    );
+
+    return $items;
+}
+
+function menu_magic_basic(){
+    $content = array();
+    $content['raw_markup']=array(
+        '#type' => 'markup',
+        '#markup' => 'this is magical',
+        '#prefix' => '<p>',
+        '#suffix' => '</p>'
+    );
+    $variables = array(
+        'path'=>'https://placekitten.com/200/300',
+        'alt'=>t('magical kitten'),
+        'title'=>t('this is the title'),
+        'attributes' => array('class' => 'some-img', 'id' => 'my-img'),
+    );
+    $content['theme_data']=array(
+        '#type' => 'markup',
+        '#markup' => theme('image', $variables),
+        '#prefix' => '<div class="menu-magic-image">',
+        '#suffix' => '</div>',
+        '#attached' => array(
+            'css' => array(
+                drupal_get_path('module','menu_magic') . '/menu_magic.css'
+            )
+        )
+    );
+    $content['renderable_element']=array(
+        '#theme' => 'item_list',
+        '#title' => t('how do we know it is magic?'),
+        '#items' => array(
+            t('is it made of wood?'),
+            t('is it made of wood 2?'),
+            t('is it made of wood 3?'),
+            t('the time is: %time',array('%time'=>date('r'))),
+        ),
+        '#cache'=> array(
+            'keys' => array('menu_magic','renderable_element'),
+            'bin' => 'cache',
+            'expire' => time() + 30,
+            'granularity' => DRUPAL_CACHE_PER_PAGE,
+        ),
+    );
+    return $content;
+}

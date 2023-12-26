@@ -1,0 +1,3 @@
+name = Menu Magic
+description = uses of hook_menu
+core = 7.x
