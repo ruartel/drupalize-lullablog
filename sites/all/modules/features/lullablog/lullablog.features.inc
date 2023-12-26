@@ -22,7 +22,7 @@ function lullablog_node_info() {
       'base' => 'node_content',
       'description' => t('Blog content type'),
       'has_title' => '1',
-      'title_label' => t('Blog'),
+      'title_label' => t('Title'),
       'help' => '',
     ),
   );
