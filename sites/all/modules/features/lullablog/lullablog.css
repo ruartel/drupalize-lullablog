@@ -1,0 +1,18 @@
+.node-lullabllog .field-name-lullablog-subtitle{
+    font-size: 1.1rem;
+    font-family: sans-serif;
+    margin: 1rem 0;
+    text-transform: uppercase;
+}
+
+.node-lullabllog .field-name-field-lullablog-entry-image{
+    float: right;
+    margin: 0 0 1rem 1rem;
+}
+
+.field-items img{
+    border: 2px solid #999;
+    float: right;
+    padding: 2px;
+    margin: 0 0 12px 12px;
+}
